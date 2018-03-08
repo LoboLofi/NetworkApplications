@@ -27,11 +27,13 @@ key_t ObtenerLlave(){
 
 int ObtnerIdSemaforo( key_t clave ){
     int idSemaforo;
-    if( ( idSemaforo = semget(clave, 2, 0777|IPC_EXCL| IPC_CREAT) ) < 0 ){
-        idSemaforo = semget(clave,2,0777);
+    if( ( idSemaforo = semget(clave, 4, 0777|IPC_EXCL| IPC_CREAT) ) < 0 ){
+        idSemaforo = semget(clave,4,0777);
     } else {
-        semctl( idSemaforo, 0, SETVAL, 1 );
-        semctl( idSemaforo, 1, SETVAL, 0 );
+        semctl( idSemaforo, 0, SETVAL, 0 );
+        semctl( idSemaforo, 1, SETVAL, 1 );
+        semctl( idSemaforo, 2, SETVAL, 0 );
+        semctl( idSemaforo, 3, SETVAL, 1 );
     }
     return idSemaforo;
 }
